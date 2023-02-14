@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.D))
             CheckNote(d_check_collider);
-        if(Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F))
             CheckNote(f_check_collider);
         if (Input.GetKeyDown(KeyCode.J))
             CheckNote(j_check_collider);
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
             if (other.Length == 0)
                 continue; //검색된 노트가 없으면 다음 콜라이더로 넘어간다
 
-            switch(i)
+            switch (i)
             {
                 case 0:
                     Debug.Log("Perfect");
@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
     {
         Vector3 spawn_position = new Vector3(0, 0.75f, 55);
 
-        switch(area)
+        switch (area)
         {
             case 0:
                 spawn_position.x = -3;
