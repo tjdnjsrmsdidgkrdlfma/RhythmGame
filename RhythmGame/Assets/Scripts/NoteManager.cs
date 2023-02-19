@@ -42,6 +42,8 @@ public class NoteManager : MonoBehaviour
     public TextMeshProUGUI note_accuracy_text;
     public float note_accuracy_remove_time;
 
+    Coroutine set_accuracy;
+
     public IEnumerator SetAccuracy(int num)
     {
         note_accuracy_text.enabled = true;
@@ -68,6 +70,10 @@ public class NoteManager : MonoBehaviour
         yield return new WaitForSeconds(note_accuracy_remove_time);
         note_accuracy_text.enabled = false;
     }
+    #endregion
+
+    #region 노트 효과
+    public ClickEffect[] click_effect = new ClickEffect[4];
     #endregion
 
     void Awake()
@@ -114,27 +120,19 @@ public class NoteManager : MonoBehaviour
             SetCombo(combo + 1);
             other[0].gameObject.GetComponent<Note>().check = true;
             other[0].gameObject.GetComponent<Note>().OnClicked();
+            click_effect[area].ShowEffect();
 
-            switch (i)
-            {
-                case 0:
-                    StartCoroutine(SetAccuracy(0));
-                    break;
-                case 1:
-                    StartCoroutine(SetAccuracy(1));
-                    break;
-                case 2:
-                    StartCoroutine(SetAccuracy(2));
-                    break;
-                case 3:
-                    StartCoroutine(SetAccuracy(3));
-                    break;
-            }
+            if(set_accuracy != null)
+                StopCoroutine(set_accuracy);            
+            set_accuracy = StartCoroutine(SetAccuracy(i));
 
             return;
         }
 
         SetCombo(0); //4개의 콜라이더를 모두 검사해서 검색된 노트가 없는 경우
+        if (set_accuracy != null)
+            StopCoroutine(set_accuracy);
+        set_accuracy = StartCoroutine(SetAccuracy(4));
     }
 
     void SpawnNote(int area)
