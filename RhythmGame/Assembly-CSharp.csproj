@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\NoteManager.cs" />
     <Compile Include="Assets\Scripts\ClickEffect.cs" />
     <Compile Include="Assets\Scripts\MissArea.cs" />
+    <Compile Include="Assets\Scripts\CSVReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

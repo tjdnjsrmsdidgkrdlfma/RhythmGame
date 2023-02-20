@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -22,6 +23,8 @@ public class NoteManager : MonoBehaviour
     #region 노트 생성
     [Header("노트 생성")]
     public GameObject note_prefab;
+
+    List<Dictionary<string, object>> note_data;// = CSVReader.Read("NoteTest");
     #endregion
 
     #region 노트 콤보
@@ -79,7 +82,18 @@ public class NoteManager : MonoBehaviour
     void Awake()
     {
         mask = LayerMask.GetMask("Note");
+        note_data = CSVReader.Read("NoteTest");
+        note_data.Sort(new SortComparer());
+        for(int i = 0; i < note_data.Count; i++)
+        {
+            Debug.Log(note_data[i]["Time"] + "_" + note_data[i]["Area"]);
+        }
         combo = 0;
+    }
+
+    void Start()
+    {
+        StartCoroutine(SpawnNote());
     }
 
     void Update()
@@ -93,14 +107,14 @@ public class NoteManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
             CheckNote(3);
 
-        if (Input.GetKeyDown(KeyCode.E))
-            SpawnNote(0);
-        if (Input.GetKeyDown(KeyCode.R))
-            SpawnNote(1);
-        if (Input.GetKeyDown(KeyCode.U))
-            SpawnNote(2);
-        if (Input.GetKeyDown(KeyCode.I))
-            SpawnNote(3);
+        //if (Input.GetKeyDown(KeyCode.E))
+        //    SpawnNote(0);
+        //if (Input.GetKeyDown(KeyCode.R))
+        //    SpawnNote(1);
+        //if (Input.GetKeyDown(KeyCode.U))
+        //    SpawnNote(2);
+        //if (Input.GetKeyDown(KeyCode.I))
+        //    SpawnNote(3);
     }
 
     void CheckNote(int area)
@@ -135,26 +149,47 @@ public class NoteManager : MonoBehaviour
         set_accuracy = StartCoroutine(SetAccuracy(4));
     }
 
-    void SpawnNote(int area)
+    IEnumerator SpawnNote()
     {
+        int i = 0;
+        float time = 0;
         Vector3 spawn_position = new Vector3(0, 0.05f, 55);
 
-        switch (area)
+        while (i < note_data.Count)
         {
-            case 0:
-                spawn_position.x = -3;
-                break;
-            case 1:
-                spawn_position.x = -1;
-                break;
-            case 2:
-                spawn_position.x = 1;
-                break;
-            case 3:
-                spawn_position.x = 3;
-                break;
-        }
+            time += Time.deltaTime;
 
-        Instantiate(note_prefab, spawn_position, Quaternion.identity);
+            if (time > float.Parse(note_data[i]["Time"].ToString()))
+            {
+                switch (int.Parse(note_data[i]["Area"].ToString()))
+                {
+                    case 0:
+                        spawn_position.x = -3;
+                        break;
+                    case 1:
+                        spawn_position.x = -1;
+                        break;
+                    case 2:
+                        spawn_position.x = 1;
+                        break;
+                    case 3:
+                        spawn_position.x = 3;
+                        break;
+                }
+
+                Instantiate(note_prefab, spawn_position, Quaternion.identity);
+                i++;
+            }
+
+            yield return null;
+        }
+    }
+}
+
+public class SortComparer : IComparer<Dictionary<string, object>>
+{
+    public int Compare(Dictionary<string, object> a, Dictionary<string, object> b)
+    {
+        return float.Parse(a["Time"].ToString()) < float.Parse(b["Time"].ToString()) ? -1 : 1;
     }
 }
