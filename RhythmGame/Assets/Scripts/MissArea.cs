@@ -12,8 +12,8 @@ public class MissArea : MonoBehaviour
         {
             if (other.GetComponent<Note>().check == false)
             {
-                note_manager.SetCombo(0);
-                StartCoroutine(note_manager.SetAccuracy(4));
+                note_manager.Combo = 0;
+                StartCoroutine(note_manager.SetAccuracy((int)NoteManager.Accuracy.Miss));
             }
             Destroy(other.gameObject);
         }
