@@ -98,7 +98,7 @@ public class NoteManager : MonoBehaviour
         int note_count = note_data.Count;
         possible_max_score = 0;
 
-        while(note_count > score_multiplier_by_combo)
+        while(note_count > score_multiplier_by_combo) //가능한 최고 점수를 구하는 코드
         {
             possible_max_score += basic_score_per_note * score_by_accuracy[(int)Accuracy.Perfect] * (note_count / score_multiplier_by_combo + 1);
             note_count -= score_multiplier_by_combo;
@@ -140,12 +140,15 @@ public class NoteManager : MonoBehaviour
                 continue; //검색된 노트가 없으면 다음 콜라이더로 넘어간다
 
             Combo = Combo + 1;
-            other[0].gameObject.GetComponent<Note>().check = true;
-            other[0].gameObject.GetComponent<Note>().OnClicked();
-            click_effect[area].ShowEffect();
+            foreach(Collider temp in other)
+            {
+                temp.GetComponent<Note>().check = true;
+                temp.GetComponent<Note>().OnClicked();
+            }
+            click_effect[area].OnClickedEffect(false);
 
             if(set_accuracy != null)
-                StopCoroutine(set_accuracy);            
+                StopCoroutine(set_accuracy);
             set_accuracy = StartCoroutine(SetAccuracy(i));
 
             ScoreTemp(i);
@@ -154,6 +157,7 @@ public class NoteManager : MonoBehaviour
         }
 
         Combo = 0; //4개의 콜라이더를 모두 검사해서 검색된 노트가 없는 경우
+        click_effect[area].OnClickedEffect(true);
         if (set_accuracy != null)
             StopCoroutine(set_accuracy);
         set_accuracy = StartCoroutine(SetAccuracy((int)Accuracy.Miss));
@@ -198,15 +202,14 @@ public class NoteManager : MonoBehaviour
 
         float temp = (float)score / (float)possible_max_score;
         score_bar.fillAmount = temp;
-        Debug.Log(temp);
 
-        if (temp >= 90)
+        if (temp >= 0.9)
             grade.text = "S";
-        else if (temp >= 80)
+        else if (temp >= 0.8)
             grade.text = "A";
-        else if (temp >= 60)
+        else if (temp >= 0.6)
             grade.text = "B";
-        else if (temp >= 40)
+        else if (temp >= 0.4)
             grade.text = "C";
         else
             grade.text = "D";
