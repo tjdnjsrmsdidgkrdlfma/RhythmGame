@@ -111,6 +111,8 @@ public class NoteManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnNote());
+
+        SoundManager.sound_manager.PlayBGM("Asgore");
     }
 
     void Update()
@@ -128,6 +130,8 @@ public class NoteManager : MonoBehaviour
     void CheckNote(int area)
     {
         Collider[] other;
+
+        SoundManager.sound_manager.PlaySFX("AreaClick");
 
         for (int i = 0; i < 4; i++)
         {
