@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NoteManager : MonoBehaviour
+public class InGameManager : MonoBehaviour
 {
     public enum Accuracy
     {
@@ -83,8 +83,15 @@ public class NoteManager : MonoBehaviour
     void Awake()
     {
         mask = LayerMask.GetMask("Note");
-        note_data = CSVReader.Read("NoteTest");
-        note_data.Sort(new SortComparer());
+
+        StringBuilder csv_path = new StringBuilder();
+        csv_path.Append(Application.persistentDataPath);
+        csv_path.Append("/");
+        csv_path.Append(GameManager.game_manager.music_name);
+        csv_path.Append(".csv");
+
+        note_data = CSVReader.Read(csv_path.ToString());
+        note_data.Sort(new InGameDataComparer());
         combo = 0;
         ScoreInit();
     }
@@ -217,13 +224,5 @@ public class NoteManager : MonoBehaviour
             grade.text = "C";
         else
             grade.text = "D";
-    }
-}
-
-public class SortComparer : IComparer<Dictionary<string, object>>
-{
-    public int Compare(Dictionary<string, object> a, Dictionary<string, object> b)
-    {
-        return float.Parse(a["Time"].ToString()) < float.Parse(b["Time"].ToString()) ? -1 : 1;
     }
 }

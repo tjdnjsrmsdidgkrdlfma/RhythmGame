@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class MissArea : MonoBehaviour
 {
-    public NoteManager note_manager;
+    InGameManager in_game_manager;
+
+    void Awake()
+    {
+        in_game_manager = GameObject.FindObjectOfType<InGameManager>();
+    }
 
     void OnTriggerStay(Collider other)
     {
@@ -12,8 +17,8 @@ public class MissArea : MonoBehaviour
         {
             if (other.GetComponent<Note>().check == false)
             {
-                note_manager.Combo = 0;
-                StartCoroutine(note_manager.SetAccuracy((int)NoteManager.Accuracy.Miss));
+                in_game_manager.Combo = 0;
+                StartCoroutine(in_game_manager.SetAccuracy((int)InGameManager.Accuracy.Miss));
             }
             Destroy(other.gameObject);
         }

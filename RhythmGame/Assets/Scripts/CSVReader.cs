@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.IO;
 
 public class CSVReader
 {
@@ -13,9 +14,11 @@ public class CSVReader
     public static List<Dictionary<string, object>> Read(string file)
     {
         var list = new List<Dictionary<string, object>>();
-        TextAsset data = Resources.Load(file) as TextAsset;
+        string data;
+        StreamReader reader = new StreamReader(file);
+        data = reader.ReadToEnd();
 
-        var lines = Regex.Split(data.text, LINE_SPLIT_RE);
+        var lines = Regex.Split(data, LINE_SPLIT_RE);
 
         if (lines.Length <= 1) return list;
 

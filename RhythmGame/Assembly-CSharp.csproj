@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CSVReader.cs" />
     <Compile Include="Assets\Scripts\Note.cs" />
-    <Compile Include="Assets\Scripts\NoteManager.cs" />
+    <Compile Include="Assets\Scripts\InGameManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\ClickEffect.cs" />
     <Compile Include="Assets\Scripts\IntroManager.cs" />
