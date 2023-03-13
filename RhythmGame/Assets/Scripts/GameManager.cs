@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     {
         music_name = stage_name;
 
-        SceneManager.LoadScene("InGame");
+        LoadingSceneManager.LoadScene("InGame");
     }
 }
 

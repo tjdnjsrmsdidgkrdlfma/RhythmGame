@@ -287,6 +287,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e095327d893b1454780cc7c25f225998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menu_button: {fileID: 691610569}
+  setting_button: {fileID: 1984047408}
   menu_buttons: {fileID: 1775604292}
   settings_buttons: {fileID: 1461894299}
   default_menu_buttons: {fileID: 1006988319}
@@ -760,6 +762,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &450823115
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,6 +795,7 @@ MonoBehaviour:
   is_bgm_on: 0
   is_sfx_on: 0
   note_speed: 0
+  music_name: 
 --- !u!4 &450823117
 Transform:
   m_ObjectHideFlags: 0
@@ -868,6 +872,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &691610572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1118,6 +1123,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &867585182
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,6 +1279,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &912502361
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,6 +1511,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1037440391
 GameObject:
   m_ObjectHideFlags: 0
@@ -2109,7 +2117,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -2521,3 +2529,4 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

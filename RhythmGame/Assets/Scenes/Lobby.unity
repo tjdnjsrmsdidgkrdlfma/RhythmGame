@@ -1465,7 +1465,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Note Speed
 
-    x0.5'
+    x1.0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0b8cd79999c8a7343a098c96efb2b7f7, type: 2}
   m_sharedMaterial: {fileID: -1411955256902665429, guid: 0b8cd79999c8a7343a098c96efb2b7f7, type: 2}

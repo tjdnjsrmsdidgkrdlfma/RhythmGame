@@ -21,6 +21,15 @@ public class LobbyManager : MonoBehaviour
     bool is_note_speed_setter_on;
     int current_music;
     float note_speed;
+    float Note_speed
+    {
+        get { return note_speed; }
+        set
+        {
+            note_speed = Mathf.Clamp(value, min_note_speed, max_note_speed);
+            SetNoteSpeedText(note_speed);
+        }
+    }
 
     readonly float min_note_speed = 0.5f;
     readonly float max_note_speed = 6;
@@ -34,7 +43,7 @@ public class LobbyManager : MonoBehaviour
         is_moving = false;
         is_note_speed_setter_on = false;
         current_music = 0;
-        note_speed = 1;
+        Note_speed = 1;
     }
 
     void MusicDataInit()
@@ -153,20 +162,19 @@ public class LobbyManager : MonoBehaviour
             {
                 is_note_speed_setter_on = !is_note_speed_setter_on;
                 note_speed_setter.SetActive(is_note_speed_setter_on);
+                Note_speed = 1;
             }
         }
     }
 
     public void OnDecreaseButtonClicked()
     {
-        note_speed = Mathf.Clamp(note_speed - 0.5f, min_note_speed, max_note_speed);
-        SetNoteSpeedText(note_speed);
+        Note_speed -= 0.5f;
     }
 
     public void OnIncreaseButtonClicked()
     {
-        note_speed = Mathf.Clamp(note_speed + 0.5f, min_note_speed, max_note_speed);
-        SetNoteSpeedText(note_speed);
+        Note_speed += 0.5f;
     }
 
     void SetNoteSpeedText(float note_speed)
