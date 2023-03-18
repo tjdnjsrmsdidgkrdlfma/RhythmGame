@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CSVReader.cs" />
     <Compile Include="Assets\Scripts\Note.cs" />
+    <Compile Include="Assets\Scripts\LoadingSceneManager.cs" />
     <Compile Include="Assets\Scripts\InGameManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\ClickEffect.cs" />
@@ -65,7 +66,15 @@
     <Compile Include="Assets\Scripts\LobbyManager.cs" />
     <Compile Include="Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\MissArea.cs" />
-    <Compile Include="Assets\Scripts\LoadingSceneManager.cs" />
+    <Compile Include="Assets\Packages\SlimUI\Modern Menu 1\Scripts\CheckSFXVolume.cs" />
+    <Compile Include="Assets\Packages\SlimUI\Modern Menu 1\Scripts\ResetDemo.cs" />
+    <Compile Include="Assets\Packages\SlimUI\Modern Menu 1\Scripts\ExtraLinks.cs" />
+    <Compile Include="Assets\Packages\SlimUI\Modern Menu 1\Scripts\CheckMusicVolume.cs" />
+    <Compile Include="Assets\Packages\SlimUI\Modern Menu 1\Scripts\OptionsMenuNew.cs" />
+    <Compile Include="Assets\Packages\SlimUI\Modern Menu 1\Scripts\FlexibleUIData.cs" />
+    <Compile Include="Assets\Packages\SlimUI\Modern Menu 1\Scripts\FlexibleUIElement.cs" />
+    <Compile Include="Assets\Packages\SlimUI\Modern Menu 1\Scripts\FlexibleUI.cs" />
+    <Compile Include="Assets\Packages\SlimUI\Modern Menu 1\Scripts\MainMenuNew.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packages\TextMesh Pro\Shaders\TMPro.cginc" />

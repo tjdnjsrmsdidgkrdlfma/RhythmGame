@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
+using TMPro;
 
 public class LoadingSceneManager : MonoBehaviour
 {
     public static string nextScene;
     [SerializeField] Image progressBar;
-    [SerializeField] RectTransform press_space_to_start;
+    [SerializeField] TextMeshProUGUI press_space_to_start;
 
     private void Start()
     {
@@ -33,7 +34,8 @@ public class LoadingSceneManager : MonoBehaviour
 
         Coroutine move_press_space_to_start;
 
-        move_press_space_to_start = StartCoroutine(MoveTextUpAndDown());
+        press_space_to_start.text = "LOADING...";
+        move_press_space_to_start = StartCoroutine(TextFadeInOut());
 
         while (!op.isDone)
         {
@@ -48,6 +50,8 @@ public class LoadingSceneManager : MonoBehaviour
             }
         }
 
+        press_space_to_start.text = "PRESS SPACE TO START";
+
         while (true)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -60,45 +64,38 @@ public class LoadingSceneManager : MonoBehaviour
         op.allowSceneActivation = true;
     }
 
-    IEnumerator MoveTextUpAndDown()
+    IEnumerator TextFadeInOut()
     {
-        bool up = true;
-
-        float temp;
+        bool fade_in = false;
 
         float from;
         float to;
+        float repeat_time = 20;
 
         while (true)
         {
-            if (up == true)
+            if (fade_in == true)
             {
                 from = 0;
-                to = 150;
+                to = 1;
             }
             else
             {
-                from = 150;
+                from = 1;
                 to = 0;
             }
 
-            for (float i = 0; i < 30; i++)
+            for(int i = 0; i < repeat_time; i++)
             {
-                temp = Mathf.Lerp(from, to, i / 30);
-                press_space_to_start.offsetMin = new Vector2(press_space_to_start.offsetMin.x, temp);
-                yield return null;
-                yield return null;
-                yield return null;
-                yield return null;
-                yield return null;
+                from = Mathf.Lerp(from, to, i / repeat_time);
+                press_space_to_start.color = new Color(1, 1, 1, from);
+
+                yield return new WaitForSeconds(0.025f);
             }
 
-            temp = to;
-            press_space_to_start.offsetMin = new Vector2(press_space_to_start.offsetMin.x, temp);
+            press_space_to_start.color = new Color(1, 1, 1, to);
 
-            up = !up;
-
-            //yield return new WaitForSeconds(0.05f);
+            fade_in = !fade_in;
         }
     }
 }
