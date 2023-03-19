@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager game_manager;
 
-    public bool is_bgm_on;
-    public bool is_sfx_on;
     public float note_speed;
     public string music_name;
 
@@ -17,15 +15,13 @@ public class GameManager : MonoBehaviour
         if (game_manager == null)
         {
             game_manager = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
 
-        is_bgm_on = true;
-        is_sfx_on = true;
         note_speed = 1;
     }
 

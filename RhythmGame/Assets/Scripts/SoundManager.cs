@@ -14,6 +14,42 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager sound_manager;
 
+    [SerializeField] bool is_bgm_on;
+    public bool IsBGMOn
+    {
+        get { return is_bgm_on; }
+        set
+        {
+            is_bgm_on = value;
+            SetBGMOnOff(is_bgm_on);
+        }
+    }
+    void SetBGMOnOff(bool is_bgm_on)
+    {
+        if(is_bgm_on == true)
+            bgm_player.volume = 1;
+        else
+            bgm_player.volume = 0;
+    }
+
+    [SerializeField] bool is_sfx_on;
+    public bool IsSFXOn
+    {
+        get { return is_sfx_on; }
+        set
+        {
+            is_sfx_on = value;
+            SetSFXOnOff(is_sfx_on);
+        }
+    }
+    void SetSFXOnOff(bool is_sfx_on)
+    {
+        if (is_sfx_on == true)
+            sfx_player.volume = 0.1f;
+        else
+            sfx_player.volume = 0;
+    }
+
     public Sound[] bgm;
     public Sound[] sfx;
 
@@ -25,12 +61,15 @@ public class SoundManager : MonoBehaviour
         if (sound_manager == null)
         {
             sound_manager = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
+
+        IsBGMOn = true;
+        IsSFXOn = true;
     }
 
     public void PlayBGM(string bgm_name)

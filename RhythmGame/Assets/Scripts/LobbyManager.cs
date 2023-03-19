@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -106,6 +107,8 @@ public class LobbyManager : MonoBehaviour
     {
         is_moving = true;
 
+        SoundManager.sound_manager.PlaySFX("PageSlide");
+
         RectTransform rt = music_infomations.GetComponent<RectTransform>();
         Vector2 destination;
 
@@ -170,11 +173,15 @@ public class LobbyManager : MonoBehaviour
     public void OnDecreaseButtonClicked()
     {
         Note_speed -= 0.5f;
+
+        SoundManager.sound_manager.PlaySFX("ButtonClick");
     }
 
     public void OnIncreaseButtonClicked()
     {
         Note_speed += 0.5f;
+
+        SoundManager.sound_manager.PlaySFX("ButtonClick");
     }
 
     void SetNoteSpeedText(float note_speed)

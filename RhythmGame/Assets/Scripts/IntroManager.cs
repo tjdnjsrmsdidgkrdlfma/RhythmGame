@@ -27,6 +27,8 @@ public class IntroManager : MonoBehaviour
 
     public void OnStartButtonClicked()
     {
+        SoundManager.sound_manager.PlaySFX("ButtonClick");
+
         LoadingSceneManager.LoadScene("Lobby");
     }
 
@@ -36,25 +38,33 @@ public class IntroManager : MonoBehaviour
         settings_buttons.SetActive(true);
 
         event_system.SetSelectedGameObject(default_settings_buttons);
+
+        SoundManager.sound_manager.PlaySFX("ButtonClick");
     }
 
     public void OnQuitButtonClicked()
     {
+        SoundManager.sound_manager.PlaySFX("ButtonClick");
+
         Application.Quit();
     }
 
     public void OnBGMButtonClicked()
     {
-        GameManager.game_manager.is_bgm_on = !GameManager.game_manager.is_bgm_on;
+        SoundManager.sound_manager.IsBGMOn = !SoundManager.sound_manager.IsBGMOn;
         is_bgm_disable_line_on = !is_bgm_disable_line_on;
         bgm_disable_line.SetActive(is_bgm_disable_line_on);
+
+        SoundManager.sound_manager.PlaySFX("ButtonClick");
     }
 
     public void OnSFXButtonClicked()
     {
-        GameManager.game_manager.is_sfx_on = !GameManager.game_manager.is_sfx_on;
+        SoundManager.sound_manager.IsSFXOn = !SoundManager.sound_manager.IsSFXOn;
         is_sfx_disable_line_on = !is_sfx_disable_line_on;
         sfx_disable_line.SetActive(is_sfx_disable_line_on);
+
+        SoundManager.sound_manager.PlaySFX("ButtonClick");
     }
 
     public void OnMenuButtonClicked()
@@ -63,5 +73,7 @@ public class IntroManager : MonoBehaviour
         settings_buttons.SetActive(false);
 
         event_system.SetSelectedGameObject(default_menu_buttons);
+
+        SoundManager.sound_manager.PlaySFX("ButtonClick");
     }
 }
