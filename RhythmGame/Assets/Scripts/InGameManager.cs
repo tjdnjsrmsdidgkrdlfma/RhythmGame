@@ -360,11 +360,15 @@ public class InGameManager : MonoBehaviour
 
     public void RestartButton()
     {
+        SoundManager.sound_manager.PlaySFX("ButtonClick");
+
         GameManager.game_manager.LoadIngameScene(GameManager.game_manager.music_name);
     }
 
     public void LobbyButton()
     {
+        SoundManager.sound_manager.PlaySFX("ButtonClick");
+
         LoadingSceneManager.LoadScene("Lobby");
     }
 }
