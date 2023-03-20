@@ -19,6 +19,11 @@ public class InGameManager : MonoBehaviour
         D, F, J, K
     }
 
+    enum Grade
+    {
+        S, A, B, C, D
+    }
+
     #region 노트 검사
     [Serializable]
     public class check_collider_1d
@@ -36,6 +41,8 @@ public class InGameManager : MonoBehaviour
     [Header("노트 생성")]
     public GameObject note_prefab;
 
+    [SerializeField] GameObject note_container;
+
     readonly int[] note_x_position = new int[4] { -3, -1, 1, 3 };
     List<Dictionary<string, object>> note_data;
     #endregion
@@ -47,11 +54,14 @@ public class InGameManager : MonoBehaviour
     int combo;
     public int Combo
     {
-        get { return combo; } 
+        get { return combo; }
         set
         {
             combo = value;
             combo_text.text = combo.ToString();
+
+            if (combo > max_combo)
+                max_combo = combo;
         }
     }
     #endregion
@@ -69,7 +79,7 @@ public class InGameManager : MonoBehaviour
     #endregion
 
     #region 점수
-    public TextMeshProUGUI grade;
+    public TextMeshProUGUI grade_text;
     public Image score_bar;
     public TextMeshProUGUI score_text;
 
@@ -78,6 +88,25 @@ public class InGameManager : MonoBehaviour
     readonly int[] score_by_accuracy = new int[4] { 5, 3, 2, 1 };
     int possible_max_score;
     int score;
+
+    Grade grade = Grade.D;
+    #endregion
+
+    #region 결과창
+    [Header("노트 검사")]
+    [SerializeField] float time_before_after_game;
+
+    [SerializeField] GameObject result_screen;
+    [SerializeField] TextMeshProUGUI max_combo_text;
+    [SerializeField] TextMeshProUGUI final_score_text;
+    [SerializeField] TextMeshProUGUI final_grade_text;
+    [SerializeField] TextMeshProUGUI hit_time_by_accuracy;
+
+    bool is_start;
+    bool is_end;
+
+    int max_combo = 0;
+    int[] hit_times_by_accuracy = new int[5];
     #endregion
 
     void Awake()
@@ -93,19 +122,23 @@ public class InGameManager : MonoBehaviour
         note_data = CSVReader.Read(csv_path.ToString());
         note_data.Sort(new InGameDataComparer());
         combo = 0;
+
+        is_start = false;
+        is_end = false;
+
         ScoreInit();
     }
 
     void ScoreInit()
     {
-        grade.text = "D";
+        grade_text.text = "D";
         score_bar.fillAmount = 0;
         score_text.text = "000000";
 
         int note_count = note_data.Count;
         possible_max_score = 0;
 
-        while(note_count > score_multiplier_by_combo) //가능한 최고 점수를 구하는 코드
+        while (note_count > score_multiplier_by_combo) //가능한 최고 점수를 구하는 코드
         {
             possible_max_score += basic_score_per_note * score_by_accuracy[(int)Accuracy.Perfect] * (note_count / score_multiplier_by_combo + 1);
             note_count -= score_multiplier_by_combo;
@@ -115,8 +148,12 @@ public class InGameManager : MonoBehaviour
         score = 0;
     }
 
-    void Start()
+    IEnumerator Start()
     {
+        yield return new WaitForSeconds(time_before_after_game);
+
+        is_start = true;
+
         StartCoroutine(SpawnNote());
 
         SoundManager.sound_manager.PlayBGM("Asgore");
@@ -138,7 +175,12 @@ public class InGameManager : MonoBehaviour
     {
         Collider[] other;
 
+        click_effect[area].OnClickedEffect(true);
+
         SoundManager.sound_manager.PlaySFX("AreaClick");
+
+        if (is_start == false || is_end == true)
+            return;
 
         for (int i = 0; i < 4; i++)
         {
@@ -151,24 +193,23 @@ public class InGameManager : MonoBehaviour
                 continue; //검색된 노트가 없으면 다음 콜라이더로 넘어간다
 
             Combo = Combo + 1;
-            foreach(Collider temp in other)
+            foreach (Collider temp in other)
             {
                 temp.GetComponent<Note>().check = true;
                 temp.GetComponent<Note>().OnClicked();
             }
             click_effect[area].OnClickedEffect(false);
 
-            if(set_accuracy != null)
+            if (set_accuracy != null)
                 StopCoroutine(set_accuracy);
             set_accuracy = StartCoroutine(SetAccuracy(i));
 
-            ScoreTemp(i);
+            ChangeScore(i);
 
             return;
         }
 
         Combo = 0; //4개의 콜라이더를 모두 검사해서 검색된 노트가 없는 경우
-        click_effect[area].OnClickedEffect(true);
         if (set_accuracy != null)
             StopCoroutine(set_accuracy);
         set_accuracy = StartCoroutine(SetAccuracy((int)Accuracy.Miss));
@@ -180,6 +221,8 @@ public class InGameManager : MonoBehaviour
 
         note_accuracy_text.text = Enum.GetName(typeof(Accuracy), num);
 
+        hit_times_by_accuracy[num]++;
+
         yield return new WaitForSeconds(note_accuracy_remove_time);
         note_accuracy_text.enabled = false;
     }
@@ -189,6 +232,7 @@ public class InGameManager : MonoBehaviour
         int i = 0;
         float time = 0;
         Vector3 spawn_position = new Vector3(0, 0.05f, 55);
+        GameObject temp;
 
         while (i < note_data.Count)
         {
@@ -198,15 +242,88 @@ public class InGameManager : MonoBehaviour
             {
                 spawn_position.x = note_x_position[int.Parse(note_data[i]["Area"].ToString())];
 
-                Instantiate(note_prefab, spawn_position, Quaternion.identity);
+                temp = Instantiate(note_prefab, spawn_position, Quaternion.identity);
+                temp.transform.parent = note_container.transform;
                 i++;
             }
 
             yield return null;
         }
+
+        StartCoroutine(ShowResult());
     }
 
-    void ScoreTemp(int accuracy)
+    IEnumerator ShowResult()
+    {
+        while (note_container.transform.childCount != 0)
+        {
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(time_before_after_game);
+
+        is_end = true;
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append("Max Combo: ");
+        sb.Append(max_combo);
+        max_combo_text.text = sb.ToString();
+        sb.Clear();
+
+        sb.Append("Score: ");
+        sb.Append(score);
+        final_score_text.text = sb.ToString();
+        sb.Clear();
+
+        sb.Append("Grade: ");
+        switch((int)grade)
+        {
+            case 0:
+                sb.Append("S");
+                break;
+            case 1:
+                sb.Append("A");
+                break;
+            case 2:
+                sb.Append("B");
+                break;
+            case 3:
+                sb.Append("C");
+                break;
+            case 4:
+                sb.Append("D");
+                break;
+        }
+        final_grade_text.text = sb.ToString();
+        sb.Clear();
+
+        sb.Append("Perfect: ");
+        sb.Append(hit_times_by_accuracy[(int)Accuracy.Perfect]);
+        sb.Append("\n");
+
+        sb.Append("Great: ");
+        sb.Append(hit_times_by_accuracy[(int)Accuracy.Great]);
+        sb.Append("\n");
+
+        sb.Append("Good: ");
+        sb.Append(hit_times_by_accuracy[(int)Accuracy.Good]);
+        sb.Append("\n");
+
+        sb.Append("Ok: ");
+        sb.Append(hit_times_by_accuracy[(int)Accuracy.Ok]);
+        sb.Append("\n");
+
+        sb.Append("Miss: ");
+        sb.Append(hit_times_by_accuracy[(int)Accuracy.Miss]);
+        sb.Append("\n");
+        hit_time_by_accuracy.text = sb.ToString();
+        sb.Clear();
+
+        result_screen.SetActive(true);
+    }
+
+    void ChangeScore(int accuracy)
     {
         score += basic_score_per_note * score_by_accuracy[accuracy] * (Combo / score_multiplier_by_combo + 1);
         score_text.text = score.ToString();
@@ -215,14 +332,39 @@ public class InGameManager : MonoBehaviour
         score_bar.fillAmount = temp;
 
         if (temp >= 0.9)
-            grade.text = "S";
+        {
+            grade_text.text = "S";
+            grade = Grade.S;
+        }
         else if (temp >= 0.8)
-            grade.text = "A";
+        {
+            grade_text.text = "A";
+            grade = Grade.A;
+        }
         else if (temp >= 0.6)
-            grade.text = "B";
+        {
+            grade_text.text = "B";
+            grade = Grade.B;
+        }
         else if (temp >= 0.4)
-            grade.text = "C";
+        {
+            grade_text.text = "C";
+            grade = Grade.C;
+        }
         else
-            grade.text = "D";
+        {
+            grade_text.text = "D";
+            grade = Grade.D;
+        }
+    }
+
+    public void RestartButton()
+    {
+        GameManager.game_manager.LoadIngameScene(GameManager.game_manager.music_name);
+    }
+
+    public void LobbyButton()
+    {
+        LoadingSceneManager.LoadScene("Lobby");
     }
 }
