@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Note : MonoBehaviour
@@ -14,7 +15,7 @@ public class Note : MonoBehaviour
 
     #region 파티클
     [Header("파티클")]
-    [SerializeField] float destroy_time;
+    [SerializeField] float show_particle_time;
     [SerializeField] GameObject particle;
     #endregion
 
@@ -41,7 +42,7 @@ public class Note : MonoBehaviour
         rb.velocity = -Vector3.forward * speed * GameManager.game_manager.note_speed;
     }
 
-    public void OnClicked()
+    public IEnumerator OnClicked()
     {
         rb.velocity = Vector3.zero;
 
@@ -50,6 +51,8 @@ public class Note : MonoBehaviour
         
         particle.SetActive(true);
 
-        Destroy(gameObject, destroy_time);
+        yield return new WaitForSeconds(show_particle_time);
+
+        gameObject.SetActive(false);
     }
 }

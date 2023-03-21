@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -202,7 +203,7 @@ public class InGameManager : MonoBehaviour
             foreach (Collider temp in other)
             {
                 temp.GetComponent<Note>().check = true;
-                temp.GetComponent<Note>().OnClicked();
+                StartCoroutine(temp.GetComponent<Note>().OnClicked());
             }
             click_effect[area].OnClickedEffect(false);
 
@@ -235,22 +236,45 @@ public class InGameManager : MonoBehaviour
 
     IEnumerator SpawnNote()
     {
-        int i = 0;
+        bool is_exist;
+        int note_spawn_number = 0;
         float time = 0;
         Vector3 spawn_position = new Vector3(0, 0.05f, 55);
         GameObject temp;
 
-        while (i < note_data.Count)
+        while (note_spawn_number < note_data.Count)
         {
             time += Time.deltaTime;
 
-            if (time > float.Parse(note_data[i]["Time"].ToString()))
+            if (time > float.Parse(note_data[note_spawn_number]["Time"].ToString()))
             {
-                spawn_position.x = note_x_position[int.Parse(note_data[i]["Area"].ToString())];
+                spawn_position.x = note_x_position[int.Parse(note_data[note_spawn_number]["Area"].ToString())];
 
-                temp = Instantiate(note_prefab, spawn_position, Quaternion.identity);
-                temp.transform.parent = note_pool_object.transform;
-                i++;
+                is_exist = false;
+
+                foreach(GameObject note in note_pool)
+                {
+                    if (note.activeSelf == true)
+                        continue;
+                    else
+                    {
+                        is_exist = true;
+
+                        note.transform.position = spawn_position;
+                        note.SetActive(true);
+
+                        break;
+                    }
+                }
+
+                if(is_exist == false)
+                {
+                    temp = Instantiate(note_prefab, spawn_position, Quaternion.identity);
+                    temp.transform.parent = note_pool_object.transform;
+                    note_pool.Add(temp);
+                }
+
+                note_spawn_number++;
             }
 
             yield return null;
@@ -261,8 +285,22 @@ public class InGameManager : MonoBehaviour
 
     IEnumerator ShowResult()
     {
-        while (note_pool_object.transform.childCount != 0)
+        bool is_all_notes_disabled;
+
+        while (true)
         {
+            is_all_notes_disabled = true;
+
+            foreach (GameObject temp in note_pool)
+            {
+                if (temp.activeSelf == true)
+                    is_all_notes_disabled = false;
+
+            }
+
+            if (is_all_notes_disabled == true)
+                break;
+
             yield return null;
         }
 

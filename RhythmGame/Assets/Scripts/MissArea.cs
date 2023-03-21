@@ -20,7 +20,8 @@ public class MissArea : MonoBehaviour
                 in_game_manager.Combo = 0;
                 StartCoroutine(in_game_manager.SetAccuracy((int)InGameManager.Accuracy.Miss));
             }
-            Destroy(other.gameObject);
+            
+            other.gameObject.SetActive(false);
         }
     }
 }
