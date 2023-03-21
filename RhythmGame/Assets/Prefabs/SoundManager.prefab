@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgm_list:
-  - name: Asgore
+  - name: ByuN
     clip: {fileID: 8300000, guid: 54d18fda3963f9e4c9f0ef85c7d2d6c8, type: 3}
   bgm_player: {fileID: 7429031045555317960}
   is_bgm_on: 0

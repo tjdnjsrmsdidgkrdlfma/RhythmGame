@@ -5,7 +5,7 @@ public class Note : MonoBehaviour
 {
     #region 노트 이동 속도
     [Header("노트 이동 속도")]
-    [SerializeField] float speed;
+    public float speed;
     #endregion
 
     #region 노트 클릭 여부 확인

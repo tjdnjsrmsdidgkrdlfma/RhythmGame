@@ -37,6 +37,8 @@ public class InGameManager : MonoBehaviour
 
     readonly int[] note_x_position = new int[4] { -3, -1, 1, 3 };
 
+    Vector3 spawn_position = new Vector3(0, 0.05f, 55);
+
     List<Dictionary<string, object>> note_data;
     #endregion
 
@@ -163,7 +165,10 @@ public class InGameManager : MonoBehaviour
 
         StartCoroutine(SpawnNote());
 
-        SoundManager.sound_manager.PlayBGM("Asgore");
+        //노트의 초당 이동속도가 10, 노트가 생성되는 위치에서 노트를 검사하는 위치 사이의 거리가 55, 음악과 노트가 싱크가 맞기 위해서는 5.5초 뒤에 음악 시작
+        yield return new WaitForSeconds(spawn_position.z / note_prefab.GetComponent<Note>().speed * GameManager.game_manager.note_speed);
+
+        SoundManager.sound_manager.PlayBGM(GameManager.game_manager.music_name);
     }
 
     void Update()
@@ -239,7 +244,6 @@ public class InGameManager : MonoBehaviour
         bool is_exist;
         int note_spawn_number = 0;
         float time = 0;
-        Vector3 spawn_position = new Vector3(0, 0.05f, 55);
         GameObject temp;
 
         while (note_spawn_number < note_data.Count)
