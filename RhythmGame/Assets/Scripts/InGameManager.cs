@@ -3,15 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InGameManager : MonoBehaviour
 {
-    public enum Accuracy
+    #region 노트 검사
+    [Serializable]
+    class check_collider_1d
     {
-        Perfect, Great, Good, Ok, Miss
+        public BoxCollider[] check_collider = new BoxCollider[4];
     }
 
     enum Area
@@ -19,37 +21,27 @@ public class InGameManager : MonoBehaviour
         D, F, J, K
     }
 
-    enum Grade
-    {
-        S, A, B, C, D
-    }
-
-    #region 노트 검사
-    [Serializable]
-    public class check_collider_1d
-    {
-        public BoxCollider[] check_collider = new BoxCollider[4];
-    }
-
     [Header("노트 검사")]
-    public check_collider_1d[] check_collider_2d = new check_collider_1d[4];
+    [SerializeField] check_collider_1d[] check_collider_2d = new check_collider_1d[4];
 
     LayerMask mask;
     #endregion
 
     #region 노트 생성
     [Header("노트 생성")]
-    public GameObject note_prefab;
+    public List<GameObject> note_pool;
 
-    [SerializeField] GameObject note_container;
+    [SerializeField] GameObject note_prefab;
+    [SerializeField] GameObject note_pool_object;
 
     readonly int[] note_x_position = new int[4] { -3, -1, 1, 3 };
+
     List<Dictionary<string, object>> note_data;
     #endregion
 
     #region 노트 콤보
     [Header("노트 콤보")]
-    public TextMeshProUGUI combo_text;
+    [SerializeField] TextMeshProUGUI combo_text;
 
     int combo;
     public int Combo
@@ -67,21 +59,32 @@ public class InGameManager : MonoBehaviour
     #endregion
 
     #region 노트 판정
+    public enum Accuracy
+    {
+        Perfect, Great, Good, Ok, Miss
+    }
+
     [Header("노트 판정")]
-    public TextMeshProUGUI note_accuracy_text;
-    public float note_accuracy_remove_time;
+    [SerializeField] TextMeshProUGUI note_accuracy_text;
+    [SerializeField] float note_accuracy_remove_time;
 
     Coroutine set_accuracy;
     #endregion
 
     #region 노트 효과
-    public ClickEffect[] click_effect = new ClickEffect[4];
+    [Header("노트 효과")]
+    [SerializeField] ClickEffect[] click_effect = new ClickEffect[4];
     #endregion
 
     #region 점수
-    public TextMeshProUGUI grade_text;
-    public Image score_bar;
-    public TextMeshProUGUI score_text;
+    enum Grade
+    {
+        S, A, B, C, D
+    }
+
+    [SerializeField] TextMeshProUGUI grade_text;
+    [SerializeField] Image score_bar;
+    [SerializeField] TextMeshProUGUI score_text;
 
     readonly int basic_score_per_note = 10;
     readonly int score_multiplier_by_combo = 100; //콤보가 0 ~ 99일 때는 점수가 1배 100 ~ 199일 때는 2배
@@ -97,6 +100,7 @@ public class InGameManager : MonoBehaviour
     [SerializeField] float time_before_after_game;
 
     [SerializeField] GameObject result_screen;
+    [SerializeField] GameObject lobby_button;
     [SerializeField] TextMeshProUGUI max_combo_text;
     [SerializeField] TextMeshProUGUI final_score_text;
     [SerializeField] TextMeshProUGUI final_grade_text;
@@ -104,10 +108,12 @@ public class InGameManager : MonoBehaviour
 
     bool is_start;
     bool is_end;
-
     int max_combo = 0;
     int[] hit_times_by_accuracy = new int[5];
     #endregion
+
+    [Space(10)]
+    [SerializeField] EventSystem event_system;
 
     void Awake()
     {
@@ -243,7 +249,7 @@ public class InGameManager : MonoBehaviour
                 spawn_position.x = note_x_position[int.Parse(note_data[i]["Area"].ToString())];
 
                 temp = Instantiate(note_prefab, spawn_position, Quaternion.identity);
-                temp.transform.parent = note_container.transform;
+                temp.transform.parent = note_pool_object.transform;
                 i++;
             }
 
@@ -255,7 +261,7 @@ public class InGameManager : MonoBehaviour
 
     IEnumerator ShowResult()
     {
-        while (note_container.transform.childCount != 0)
+        while (note_pool_object.transform.childCount != 0)
         {
             yield return null;
         }
@@ -320,6 +326,8 @@ public class InGameManager : MonoBehaviour
         hit_time_by_accuracy.text = sb.ToString();
         sb.Clear();
 
+        event_system.SetSelectedGameObject(lobby_button);
+
         result_screen.SetActive(true);
     }
 
@@ -360,6 +368,7 @@ public class InGameManager : MonoBehaviour
 
     public void RestartButton()
     {
+        SoundManager.sound_manager.StopBGM();
         SoundManager.sound_manager.PlaySFX("ButtonClick");
 
         GameManager.game_manager.LoadIngameScene(GameManager.game_manager.music_name);
@@ -367,6 +376,7 @@ public class InGameManager : MonoBehaviour
 
     public void LobbyButton()
     {
+        SoundManager.sound_manager.StopBGM();
         SoundManager.sound_manager.PlaySFX("ButtonClick");
 
         LoadingSceneManager.LoadScene("Lobby");

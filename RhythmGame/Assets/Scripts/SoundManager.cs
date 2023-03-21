@@ -14,6 +14,10 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager sound_manager;
 
+    #region BGM
+    [Header("BGM")]
+    [SerializeField] Sound[] bgm_list;
+    [SerializeField] AudioSource bgm_player;
     [SerializeField] bool is_bgm_on;
     public bool IsBGMOn
     {
@@ -24,6 +28,7 @@ public class SoundManager : MonoBehaviour
             SetBGMOnOff(is_bgm_on);
         }
     }
+
     void SetBGMOnOff(bool is_bgm_on)
     {
         if(is_bgm_on == true)
@@ -31,7 +36,12 @@ public class SoundManager : MonoBehaviour
         else
             bgm_player.volume = 0;
     }
+    #endregion
 
+    #region SFX
+    [Header("SFX")]
+    [SerializeField] Sound[] sfx_list;
+    [SerializeField] AudioSource sfx_player;
     [SerializeField] bool is_sfx_on;
     public bool IsSFXOn
     {
@@ -42,6 +52,7 @@ public class SoundManager : MonoBehaviour
             SetSFXOnOff(is_sfx_on);
         }
     }
+
     void SetSFXOnOff(bool is_sfx_on)
     {
         if (is_sfx_on == true)
@@ -49,12 +60,7 @@ public class SoundManager : MonoBehaviour
         else
             sfx_player.volume = 0;
     }
-
-    public Sound[] bgm;
-    public Sound[] sfx;
-
-    public AudioSource bgm_player;
-    public AudioSource sfx_player;
+    #endregion
 
     void Awake()
     {
@@ -74,11 +80,11 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBGM(string bgm_name)
     {
-        for (int i = 0; i < bgm.Length; i++)
+        for (int i = 0; i < bgm_list.Length; i++)
         {
-            if (bgm_name.Equals(bgm[i].name))
+            if (bgm_name.Equals(bgm_list[i].name))
             {
-                bgm_player.clip = bgm[i].clip;
+                bgm_player.clip = bgm_list[i].clip;
                 bgm_player.Play();
             }
         }
@@ -91,11 +97,11 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySFX(string sfx_name)
     {
-        for(int i = 0; i < sfx.Length; i++)
+        for(int i = 0; i < sfx_list.Length; i++)
         {
-            if (sfx_name.Equals(sfx[i].name))
+            if (sfx_name.Equals(sfx_list[i].name))
             {
-                sfx_player.PlayOneShot(sfx[i].clip);
+                sfx_player.PlayOneShot(sfx_list[i].clip);
             }
         }
     }

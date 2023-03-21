@@ -7,8 +7,15 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager game_manager;
 
+    #region 노트 속도
+    [Header("노트 속도")]
     public float note_speed;
+    #endregion
+
+    #region 선택한 음악 이름
+    [Header("선택한 음악 이름")]
     public string music_name;
+    #endregion
 
     void Awake()
     {

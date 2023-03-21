@@ -8,7 +8,7 @@ public class MissArea : MonoBehaviour
 
     void Awake()
     {
-        in_game_manager = GameObject.FindObjectOfType<InGameManager>();
+        in_game_manager = FindObjectOfType<InGameManager>();
     }
 
     void OnTriggerStay(Collider other)

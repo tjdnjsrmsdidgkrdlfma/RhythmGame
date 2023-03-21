@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class ClickEffect : MonoBehaviour
 {
-    public float area_effect_transparent_time;
-    public float click_effect_transparent_time; //4
-    public MeshRenderer area_effect_material;
-    public MeshRenderer click_effect_material;
+    #region 이펙트 값
+    [Header("이펙트 값")]
+    [SerializeField] float area_effect_transparent_value;
+    [SerializeField] float click_effect_transparent_value;
+    #endregion
+
+    #region 이펙트 머티리얼
+    [Header("이펙트 머티리얼")]
+    [SerializeField] MeshRenderer area_effect_material;
+    [SerializeField] MeshRenderer click_effect_material;
+    #endregion
 
     Coroutine click_effect;
     Coroutine area_effect;
@@ -33,9 +40,9 @@ public class ClickEffect : MonoBehaviour
 
         while (area_effect_material.material.color.r > 0)
         {
-            color.r = color.r - Time.deltaTime * area_effect_transparent_time;
-            color.g = color.g - Time.deltaTime * area_effect_transparent_time;
-            color.b = color.b - Time.deltaTime * area_effect_transparent_time;
+            color.r = color.r - Time.deltaTime * area_effect_transparent_value;
+            color.g = color.g - Time.deltaTime * area_effect_transparent_value;
+            color.b = color.b - Time.deltaTime * area_effect_transparent_value;
             area_effect_material.material.color = color;
             yield return null;
         }
@@ -51,7 +58,7 @@ public class ClickEffect : MonoBehaviour
 
         while (click_effect_material.material.color.a >= 0)
         {
-            color.a = color.a - Time.deltaTime * click_effect_transparent_time;
+            color.a = color.a - Time.deltaTime * click_effect_transparent_value;
             click_effect_material.material.color = color;
             yield return null;
         }

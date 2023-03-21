@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
 using TMPro;
 
 public class LoadingSceneManager : MonoBehaviour
 {
-    public static string nextScene;
+    public static string next_scene;
+
     [SerializeField] Image progressBar;
     [SerializeField] TextMeshProUGUI press_space_to_start;
 
@@ -19,7 +19,7 @@ public class LoadingSceneManager : MonoBehaviour
 
     public static void LoadScene(string sceneName)
     {
-        nextScene = sceneName;
+        next_scene = sceneName;
         SceneManager.LoadScene("LoadingScene");
     }
 
@@ -27,7 +27,7 @@ public class LoadingSceneManager : MonoBehaviour
     {
         yield return null;
 
-        AsyncOperation op = SceneManager.LoadSceneAsync(nextScene);
+        AsyncOperation op = SceneManager.LoadSceneAsync(next_scene);
         op.allowSceneActivation = false;
 
         float timer = 0.0f;

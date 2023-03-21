@@ -302,15 +302,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c7636ab5aeedd744848120093a751f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgm:
+  bgm_list:
   - name: Asgore
     clip: {fileID: 8300000, guid: 54d18fda3963f9e4c9f0ef85c7d2d6c8, type: 3}
-  sfx:
+  bgm_player: {fileID: 7429031045555317960}
+  is_bgm_on: 0
+  sfx_list:
   - name: AreaClick
     clip: {fileID: 8300000, guid: c4b713b5e59b8f443ae341f032461c38, type: 3}
   - name: ButtonClick
     clip: {fileID: 8300000, guid: 3fbec5a8ff835b34098436a9a752f675, type: 3}
   - name: PageSlide
     clip: {fileID: 8300000, guid: 4e7ce19b0c9dda1458946554f940d3b8, type: 3}
-  bgm_player: {fileID: 7429031045555317960}
   sfx_player: {fileID: 7429031046207553021}
+  is_sfx_on: 0

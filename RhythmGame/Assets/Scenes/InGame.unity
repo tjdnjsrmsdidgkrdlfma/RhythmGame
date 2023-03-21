@@ -282,7 +282,7 @@ BoxCollider:
   m_GameObject: {fileID: 20881044}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.5}
   m_Center: {x: -3, y: 0.25, z: 3}
@@ -327,7 +327,7 @@ BoxCollider:
   m_GameObject: {fileID: 58288372}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.1}
   m_Center: {x: -1, y: 0.25, z: 3}
@@ -508,7 +508,7 @@ BoxCollider:
   m_GameObject: {fileID: 132886695}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.3}
   m_Center: {x: 3, y: 0.25, z: 3}
@@ -1100,8 +1100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a2dfdcfc7053646a2ac5d6ff2f86f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  area_effect_transparent_time: 1
-  click_effect_transparent_time: 4
+  area_effect_transparent_value: 1
+  click_effect_transparent_value: 4
   area_effect_material: {fileID: 402931325}
   click_effect_material: {fileID: 1436891725}
 --- !u!1 &354671262
@@ -2267,8 +2267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a2dfdcfc7053646a2ac5d6ff2f86f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  area_effect_transparent_time: 1
-  click_effect_transparent_time: 4
+  area_effect_transparent_value: 1
+  click_effect_transparent_value: 4
   area_effect_material: {fileID: 391469031}
   click_effect_material: {fileID: 20832504}
 --- !u!1 &665122563
@@ -2462,7 +2462,7 @@ BoxCollider:
   m_GameObject: {fileID: 709632282}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.3}
   m_Center: {x: 1, y: 0.25, z: 3}
@@ -2507,7 +2507,7 @@ BoxCollider:
   m_GameObject: {fileID: 713014076}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.2}
   m_Center: {x: 1, y: 0.25, z: 3}
@@ -3054,7 +3054,7 @@ BoxCollider:
   m_GameObject: {fileID: 970826188}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.3}
   m_Center: {x: -3, y: 0.25, z: 3}
@@ -3108,8 +3108,9 @@ MonoBehaviour:
     - {fileID: 1145926427}
     - {fileID: 132886697}
     - {fileID: 1820249795}
+  note_pool: []
   note_prefab: {fileID: 7685022484614863077, guid: d27d785260a8ecc468fb883eacec0113, type: 3}
-  note_container: {fileID: 1274289378}
+  note_pool_object: {fileID: 1274289378}
   combo_text: {fileID: 472915558}
   note_accuracy_text: {fileID: 369319811}
   note_accuracy_remove_time: 1
@@ -3123,10 +3124,12 @@ MonoBehaviour:
   score_text: {fileID: 203875295}
   time_before_after_game: 5
   result_screen: {fileID: 1623507853}
+  lobby_button: {fileID: 1406776755}
   max_combo_text: {fileID: 285708754}
   final_score_text: {fileID: 1245036470}
   final_grade_text: {fileID: 1833780907}
   hit_time_by_accuracy: {fileID: 1393745616}
+  event_system: {fileID: 2000488346}
 --- !u!4 &976714306
 Transform:
   m_ObjectHideFlags: 0
@@ -3189,8 +3192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a2dfdcfc7053646a2ac5d6ff2f86f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  area_effect_transparent_time: 1
-  click_effect_transparent_time: 4
+  area_effect_transparent_value: 1
+  click_effect_transparent_value: 4
   area_effect_material: {fileID: 1116122401}
   click_effect_material: {fileID: 732256062}
 --- !u!1 &1086973110
@@ -3393,7 +3396,7 @@ BoxCollider:
   m_GameObject: {fileID: 1145926425}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.2}
   m_Center: {x: 3, y: 0.25, z: 3}
@@ -3478,7 +3481,7 @@ BoxCollider:
   m_GameObject: {fileID: 1228345145}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.1}
   m_Center: {x: 3, y: 0.25, z: 3}
@@ -3734,7 +3737,7 @@ BoxCollider:
   m_GameObject: {fileID: 1261751995}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.1}
   m_Center: {x: -3, y: 0.25, z: 3}
@@ -3748,7 +3751,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1274289379}
   m_Layer: 0
-  m_Name: Notes
+  m_Name: NotePool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4722,7 +4725,7 @@ BoxCollider:
   m_GameObject: {fileID: 1446435059}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.1}
   m_Center: {x: 1, y: 0.25, z: 3}
@@ -4847,7 +4850,7 @@ BoxCollider:
   m_GameObject: {fileID: 1465177824}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.5}
   m_Center: {x: 1, y: 0.25, z: 3}
@@ -5083,7 +5086,7 @@ BoxCollider:
   m_GameObject: {fileID: 1532491939}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.3}
   m_Center: {x: -1, y: 0.25, z: 3}
@@ -5128,7 +5131,7 @@ BoxCollider:
   m_GameObject: {fileID: 1540034614}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.5}
   m_Center: {x: -1, y: 0.25, z: 3}
@@ -5179,8 +5182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a2dfdcfc7053646a2ac5d6ff2f86f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  area_effect_transparent_time: 1
-  click_effect_transparent_time: 4
+  area_effect_transparent_value: 1
+  click_effect_transparent_value: 4
   area_effect_material: {fileID: 1674839163}
   click_effect_material: {fileID: 855657020}
 --- !u!1 &1560181604
@@ -6008,7 +6011,7 @@ BoxCollider:
   m_GameObject: {fileID: 1820249793}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.5}
   m_Center: {x: 3, y: 0.25, z: 3}
@@ -6264,7 +6267,7 @@ BoxCollider:
   m_GameObject: {fileID: 1845124707}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.2}
   m_Center: {x: -1, y: 0.25, z: 3}
@@ -6392,7 +6395,7 @@ BoxCollider:
   m_GameObject: {fileID: 1853179203}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 0.2}
   m_Center: {x: -3, y: 0.25, z: 3}
