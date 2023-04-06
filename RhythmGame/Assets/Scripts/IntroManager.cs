@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -31,6 +32,11 @@ public class IntroManager : MonoBehaviour
     {
         is_bgm_disable_line_on = false;
         is_sfx_disable_line_on = false;
+    }
+
+    void Start()
+    {
+        SoundManager.sound_manager.PlayBGM("OnceUponATime");
     }
 
     public void OnStartButtonClicked()
@@ -73,6 +79,13 @@ public class IntroManager : MonoBehaviour
 
         is_sfx_disable_line_on = !is_sfx_disable_line_on;
         sfx_disable_line.SetActive(is_sfx_disable_line_on);
+
+        SoundManager.sound_manager.PlaySFX("ButtonClick");
+    }
+
+    public void OnFilePathButtonClicked()
+    {
+        System.Diagnostics.Process.Start(Application.persistentDataPath);
 
         SoundManager.sound_manager.PlaySFX("ButtonClick");
     }

@@ -44,9 +44,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -303,8 +303,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgm_list:
-  - name: ByuN
+  - name: OnceUponATime
+    clip: {fileID: 8300000, guid: ef5932bc0b681f144a724de3455fd5fc, type: 3}
+  - name: sans
+    clip: {fileID: 8300000, guid: cef0ddfdb3791e04b8f35c2c80700dc6, type: 3}
+  - name: ASGORE
     clip: {fileID: 8300000, guid: 54d18fda3963f9e4c9f0ef85c7d2d6c8, type: 3}
+  - name: MettatonEX
+    clip: {fileID: 8300000, guid: fa1c03fc07512b14d9f33fe7b66a3d73, type: 3}
   bgm_player: {fileID: 7429031045555317960}
   is_bgm_on: 0
   sfx_list:

@@ -106,6 +106,11 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        SoundManager.sound_manager.PlayBGM("sans");
+    }
+
     void Update()
     {
         MoveMusic();

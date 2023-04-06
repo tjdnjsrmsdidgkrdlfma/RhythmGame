@@ -19,6 +19,8 @@ public class LoadingSceneManager : MonoBehaviour
 
     public static void LoadScene(string sceneName)
     {
+        SoundManager.sound_manager.StopBGM();
+
         next_scene = sceneName;
         SceneManager.LoadScene("LoadingScene");
     }
